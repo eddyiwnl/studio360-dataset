@@ -1,0 +1,1 @@
+python3 glob/video/gen_video_path.py --scene apartment_0 --pathtype circle --nsteps 100 --baseline 0.032 --noise n --moveFactor 2 --output glob/video/apartment_0_circle.txt --moveDir x --radius 2

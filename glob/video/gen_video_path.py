@@ -13,6 +13,7 @@ Note:
 import math
 import csv
 import sys
+import os
 import argparse
 from random import randint
 
@@ -191,7 +192,8 @@ def gen_square_path(scene_name, steps, baseline, noise, moveFactor, file2save):
 
 def gen_circle_path(scene_name, steps, baseline, r, noise, moveFactor, file2save):
 
-    scenePos = open("/home/selenaling/Desktop/matryodshka-replica360/glob/train/"+scene_name+"_6dof.txt", "r")
+    print("CURRPATH: ", os.getcwd())
+    scenePos = open(os.getcwd()+"/glob/train/"+scene_name+"_6dof.txt", "r")
     data = [[float(i) for i in line.split()] for line in scenePos]
 
     #samples a random valid starting position

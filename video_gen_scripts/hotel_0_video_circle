@@ -1,0 +1,1 @@
+./build/ReplicaSDK/ReplicaVideoRenderer replicas/hotel_0/mesh.ply replicas/hotel_0/textures replicas/hotel_0/glass.sur glob/video/hotel_0_circle.txt y replicas/hotel_0/video_circle_out 500 500
