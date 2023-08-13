@@ -1,6 +1,13 @@
 import numpy as np
 import pandas as pd
-import os
+import os, errno
+
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError as e:
+        if e.errno != errno.ENOENT: # errno.ENOENT = no such file or directory
+            raise # re-raise exception if a different error occurred
 
 dof_df = pd.read_csv("glob/train/room_0_6dof.txt", sep=' ', header=None)
 # cwd = os.getcwd()
@@ -26,6 +33,10 @@ dfz = df.copy()
 
 dfx['camera_pos_y'] = [0] * len(df.index)
 dfx['camera_pos_z'] = [0] * len(df.index)
+new_x = np.arange(-0.7204797863960266, 6.543098449707031, 0.01325470481)
+dfx['camera_pos_x'] = new_x[0:548]
+
+# print(len(new_x[0:548]))
 
 dfy['camera_pos_x'] = [0] * len(df.index)
 dfy['camera_pos_z'] = [0] * len(df.index)
@@ -33,9 +44,13 @@ dfy['camera_pos_z'] = [0] * len(df.index)
 dfz['camera_pos_x'] = [0] * len(df.index)
 dfz['camera_pos_y'] = [0] * len(df.index)
 
-dfx.to_csv("glob/train/room_0/room_0_only_x.txt", header=None, index=None, sep=' ', mode='a')
-dfy.to_csv("glob/train/room_0/room_0_only_y.txt", header=None, index=None, sep=' ', mode='a')
-dfz.to_csv("glob/train/room_0/room_0_only_z.txt", header=None, index=None, sep=' ', mode='a')
+silentremove("glob/train/room_0/room_0_only_x.txt")
+silentremove("glob/train/room_0/room_0_only_y.txt")
+silentremove("glob/train/room_0/room_0_only_z.txt")
+
+dfx.to_csv("glob/train/room_0/room_0_only_x.txt", header=None, index=None, sep=' ')
+dfy.to_csv("glob/train/room_0/room_0_only_y.txt", header=None, index=None, sep=' ')
+dfz.to_csv("glob/train/room_0/room_0_only_z.txt", header=None, index=None, sep=' ')
 
 
 # print(df)

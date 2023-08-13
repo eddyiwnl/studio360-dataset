@@ -1,14 +1,22 @@
-import os
+import os, errno
 from PIL import Image, ImageFont, ImageDraw
 from matplotlib import font_manager
 import numpy as np
 import pandas as pd
+import imageio
+
+def silentremove(filename):
+    try:
+        os.remove(filename)
+    except OSError as e:
+        if e.errno != errno.ENOENT: # errno.ENOENT = no such file or directory
+            raise # re-raise exception if a different error occurred
 
 # path = "C:/Users/edwar/Desktop/Cal Poly/Master's/matryodshka-360/room_0_dataset/out_1/"
-path = "/data/eddu/matryodshka-replica360/replicas/room_0/out_z/"
+path = "/data/eddu/matryodshka-replica360/replicas/room_0/out_x_nonrand_dir/"
 dir_list = os.listdir(path)
 
-dof_df = pd.read_csv("glob/train/room_0/room_0_only_z_sorted.txt", sep=',', header=None)
+dof_df = pd.read_csv("glob/train/room_0/room_0_only_x_sorted.txt", sep=',', header=None)
 scene_list = dof_df[0].to_list()
 img_list = []
 # print(scene_list)
@@ -61,9 +69,18 @@ def create_collage(width, height, listofimages, collage_num):
             y += thumbnail_height
         x += thumbnail_width
         y = 0
+    silentremove("glob/train/room_0/only_x_nonrand_dir/Collage" + collage_num + ".jpg")
+    new_im.save("glob/train/room_0/only_x_nonrand_dir/Collage" + collage_num + ".jpg")
 
-    new_im.save("glob/train/room_0/only_z/Collage" + collage_num + ".jpg")
-for i in range(0, len(img_list), 9):
-    collage_scenes = str(i) + '-' + str(i+9)
-    create_collage(7680, 4320, img_list[i:i+9], collage_scenes)
-# create_collage(1500, 1500, img_list[0:9], '0-8')
+# Collage creator
+# for i in range(0, len(img_list), 9):
+#     collage_scenes = str(i) + '-' + str(i+9)
+#     create_collage(7680, 4320, img_list[i:i+9], collage_scenes)
+
+# Gif creator
+gif_images = []
+for filename in img_list:
+    gif_images.append(imageio.imread(filename))
+
+silentremove("glob/train/room_0/cam_pos_x.gif")
+imageio.mimsave('glob/train/room_0/cam_pos_x.gif', gif_images)

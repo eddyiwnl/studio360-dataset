@@ -1,3 +1,7 @@
+equal increments of x - DONE
+maybe make slideshow
+
+still need to figure out how to stabilize cam
 for x: cx = initCam[0] + 1
 cy = initCam[1]
 

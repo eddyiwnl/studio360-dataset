@@ -7,5 +7,6 @@ test-glob/*.txt
 *.png
 *.jpg
 *.jpeg
+*.gif
 tmp/
 test*.sh

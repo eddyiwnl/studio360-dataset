@@ -136,8 +136,16 @@ int main(int argc, char* argv[]) {
   }
 
   //random look at direction
-  int cx = rand()%4;
-  int cy = rand()%4;
+  // int cx = rand()%4;
+  // int cy = rand()%4;
+
+  // for x
+  int cx = initCam[0] + 1
+  int cy = initCam[1]
+
+  // for y
+  // int cx = initCam[0]
+  // int cy = initCam[1] + 1
 
   pangolin::OpenGlRenderState s_cam(
       pangolin::ProjectionMatrixRDF_BottomLeft(
