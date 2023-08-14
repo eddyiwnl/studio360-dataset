@@ -1,11 +1,11 @@
 equal increments of x - DONE
-maybe make slideshow
+maybe make slideshow - DONE
 
-still need to figure out how to stabilize cam
+still need to figure out how to stabilize cam - DONE
 for x: cx = initCam[0] + 1
 cy = initCam[1]
 
 for y: cx = initCam[0]
 cy = initCam[1]+1
 
-write out T_camera_world to a file and the ModelView thing
+write out T_camera_world to a file and the ModelView thing - DONE (BUT GENERATE T_MATRIX TO THE PREV DIR)

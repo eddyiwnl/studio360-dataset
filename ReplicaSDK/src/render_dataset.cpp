@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
   if (std::string::npos != last_slash_idx)
   {
     scene = meshFile.substr(second2last_slash_idx+1, last_slash_idx - second2last_slash_idx-1);
+    std::cout<<"first camera pos print";
     std::cout<<"Generating from scene "<<scene<<std::endl;
   }
 
@@ -132,6 +133,7 @@ int main(int argc, char* argv[]) {
   std::vector<float> initCam = {0,0.5,-0.6230950951576233};//default
   if(navCam){
     initCam = cameraPos[0];
+    std::cout << "navCam camera pos";
     std::cout<<"First camera position:"<<initCam[0]<<" "<<initCam[1]<<" "<<initCam[2];
   }
 
@@ -140,13 +142,12 @@ int main(int argc, char* argv[]) {
   // int cy = rand()%4;
 
   // for x
-  int cx = initCam[0] + 1
-  int cy = initCam[1]
+  // int cx = initCam[0] + 1;
+  // int cy = initCam[1];
 
   // for y
-  // int cx = initCam[0]
-  // int cy = initCam[1] + 1
-
+  int cx = initCam[0];
+  int cy = initCam[1] + 1;
   pangolin::OpenGlRenderState s_cam(
       pangolin::ProjectionMatrixRDF_BottomLeft(
           width,
@@ -287,6 +288,24 @@ int main(int argc, char* argv[]) {
             s_cam.GetModelViewMatrix() = T_camera_world;
           }
 
+          // Save T_camera_world to file
+          // Construct the full output file path
+          std::string filePath = outputDir + "/t_matrix.txt";
+
+          // Open a file for writing
+          std::ofstream outFile(filePath);
+          
+          if (outFile.is_open()) {
+              // Write the matrix to the file
+              outFile << T_camera_world << std::endl;
+              
+              // Close the file
+              outFile.close();
+              std::cout << "Matrix written to file." << std::endl;
+          } else {
+              std::cerr << "Unable to open file for writing." << std::endl;
+          }
+
 
           //Render
           frameBuffer.Bind();
@@ -348,8 +367,15 @@ int main(int argc, char* argv[]) {
 
         if(navCam){
           if(j+1<numSpots){
-            int cx = rand()%4;
-            int cy = rand()%4;
+            // int cx = rand()%4;
+            // int cy = rand()%4;
+            // for x
+            // int cx = cameraPos[j+1][0] + 1;
+            // int cy = cameraPos[j+1][1];
+
+            // for y
+            int cx = cameraPos[j+1][0];
+            int cy = cameraPos[j+1][1] + 1;
             s_cam.SetModelViewMatrix(pangolin::ModelViewLookAtRDF(cameraPos[j+1][0],cameraPos[j+1][1],cameraPos[j+1][2], cx, cy, cameraPos[j+1][2], 0, 0, 1));
           }
         }else{
@@ -463,8 +489,16 @@ int main(int argc, char* argv[]) {
 
         if(navCam){
           if(j+1<numSpots){
-            int cx = rand()%4;
-            int cy = rand()%4;
+            // int cx = rand()%4;
+            // int cy = rand()%4;
+
+            // for x
+            // int cx = cameraPos[j+1][0] + 1;
+            // int cy = cameraPos[j+1][1];
+
+            // for y
+            int cx = cameraPos[j+1][0];
+            int cy = cameraPos[j+1][1] + 1;
             s_cam.SetModelViewMatrix(pangolin::ModelViewLookAtRDF(cameraPos[j+1][0],cameraPos[j+1][1],cameraPos[j+1][2], cx, cy, cameraPos[j+1][2], 0, 0, 1));
           }
         }else{

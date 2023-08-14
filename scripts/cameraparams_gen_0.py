@@ -40,6 +40,8 @@ dfx['camera_pos_x'] = new_x[0:548]
 
 dfy['camera_pos_x'] = [0] * len(df.index)
 dfy['camera_pos_z'] = [0] * len(df.index)
+new_y = np.arange(-0.9944400787353516, 3.21042275428772, 0.00767310735)
+dfy['camera_pos_y'] = new_y[0:548]
 
 dfz['camera_pos_x'] = [0] * len(df.index)
 dfz['camera_pos_y'] = [0] * len(df.index)

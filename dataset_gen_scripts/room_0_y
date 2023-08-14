@@ -1,0 +1,1 @@
+./build/ReplicaSDK/ReplicaRendererDataset replicas/room_0/mesh.ply replicas/room_0/textures replicas/room_0/glass.sur glob/train/room_0/room_0_only_y.txt y replicas/room_0/out_y_nonrand_dir 2560 1440 n

@@ -13,19 +13,22 @@ def silentremove(filename):
             raise # re-raise exception if a different error occurred
 
 # path = "C:/Users/edwar/Desktop/Cal Poly/Master's/matryodshka-360/room_0_dataset/out_1/"
-path = "/data/eddu/matryodshka-replica360/replicas/room_0/out_x_nonrand_dir/"
+path = "/data/eddu/matryodshka-replica360/replicas/room_0/out_y_nonrand_dir/"
 dir_list = os.listdir(path)
 
-dof_df = pd.read_csv("glob/train/room_0/room_0_only_x_sorted.txt", sep=',', header=None)
+dof_df = pd.read_csv("glob/train/room_0/room_0_only_y_sorted.txt", sep=',', header=None)
 scene_list = dof_df[0].to_list()
+# print(dof_df)
 img_list = []
 # print(scene_list)
-# print(dof_df)
-# print(dir_list[0])
+# # print(dof_df)
+# print(dir_list[1193])
+# print(dir_list[1194].split('_')[2])
 for each in scene_list:
     # print('each: ', type(each))
     for i in range(len(dir_list)):
         # print('compareto: ', dir_list[i].split('_')[3])
+        # print(i)
         if(each == int(dir_list[i].split('_')[2])):
             if(dir_list[i].split('_')[3] == 'pos00.jpeg'):
                 img_list.append(path + dir_list[i])
@@ -69,8 +72,8 @@ def create_collage(width, height, listofimages, collage_num):
             y += thumbnail_height
         x += thumbnail_width
         y = 0
-    silentremove("glob/train/room_0/only_x_nonrand_dir/Collage" + collage_num + ".jpg")
-    new_im.save("glob/train/room_0/only_x_nonrand_dir/Collage" + collage_num + ".jpg")
+    silentremove("glob/train/room_0/only_y_nonrand_dir/Collage" + collage_num + ".jpg")
+    new_im.save("glob/train/room_0/only_y_nonrand_dir/Collage" + collage_num + ".jpg")
 
 # Collage creator
 # for i in range(0, len(img_list), 9):
@@ -82,5 +85,5 @@ gif_images = []
 for filename in img_list:
     gif_images.append(imageio.imread(filename))
 
-silentremove("glob/train/room_0/cam_pos_x.gif")
-imageio.mimsave('glob/train/room_0/cam_pos_x.gif', gif_images)
+silentremove("glob/train/room_0/cam_pos_y.gif")
+imageio.mimsave('glob/train/room_0/cam_pos_y.gif', gif_images)
