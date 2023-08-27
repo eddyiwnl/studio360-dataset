@@ -289,8 +289,11 @@ int main(int argc, char* argv[]) {
           }
 
           // Save T_camera_world to file
+          // Convert integer j/k to string and append to the filename
+          std::string jAsString = std::to_string(j);
+          std::string kAsString = std::to_string(k);
           // Construct the full output file path
-          std::string filePath = outputDir + "/t_matrix.txt";
+          std::string filePath = outputDir + "/t_matrix_" + jAsString + "_pos" + kAsString + ".txt";
 
           // Open a file for writing
           std::ofstream outFile(filePath);
