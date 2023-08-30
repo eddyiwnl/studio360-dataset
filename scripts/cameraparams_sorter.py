@@ -10,7 +10,7 @@ def silentremove(filename):
             raise # re-raise exception if a different error occurred
 
 # dof_df = pd.read_csv("glob/train/room_0_6dof.txt", sep=' ', header=None)
-dof_df = pd.read_csv("glob/train/room_0/room_0_only_y.txt", sep=' ', header=None)
+dof_df = pd.read_csv("glob/train/room_0/room_0_only_x.txt", sep=' ', header=None)
 
 # cwd = os.getcwd()
 rename_dict = {
@@ -36,11 +36,11 @@ sorted_camera_pos_x = df.sort_values(by='camera_pos_x', ascending=True)
 sorted_camera_pos_y = df.sort_values(by='camera_pos_y', ascending=True)
 sorted_camera_pos_z = df.sort_values(by='camera_pos_z', ascending=True)
 
-# silentremove("glob/train/room_0/room_0_only_x_sorted.txt")
-silentremove("glob/train/room_0/room_0_only_y_sorted.txt")
+silentremove("glob/train/room_0/room_0_only_x_sorted.txt")
+# silentremove("glob/train/room_0/room_0_only_y_sorted.txt")
 # silentremove("glob/train/room_0/room_0_only_z_sorted.txt")
 
 
-# sorted_camera_pos_x.to_csv("glob/train/room_0/room_0_only_x_sorted.txt", header=None, index=None, sep=',')
-sorted_camera_pos_y.to_csv("glob/train/room_0/room_0_only_y_sorted.txt", header=None, index=None, sep=',')
+sorted_camera_pos_x.to_csv("glob/train/room_0/room_0_only_x_sorted.txt", header=None, index=None, sep=',')
+# sorted_camera_pos_y.to_csv("glob/train/room_0/room_0_only_y_sorted.txt", header=None, index=None, sep=',')
 # sorted_camera_pos_z.to_csv("glob/train/room_0/room_0_only_z_sorted.txt", header=None, index=None, sep=',')
