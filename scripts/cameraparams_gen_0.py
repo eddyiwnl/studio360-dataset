@@ -36,12 +36,34 @@ dfx['camera_pos_z'] = [0] * len(df.index)
 new_x = np.arange(-0.7204797863960266, 6.543098449707031, 0.01325470481)
 dfx['camera_pos_x'] = new_x[0:548]
 
+# Fill rest with 0s
+dfx['target1_offset_x'] = [0] * len(df.index)
+dfx['target1_offset_y'] = [0] * len(df.index)
+dfx['target1_offset_z'] = [0] * len(df.index)
+dfx['target2_offset_x'] = [0] * len(df.index)
+dfx['target2_offset_y'] = [0] * len(df.index)
+dfx['target2_offset_z'] = [0] * len(df.index)
+dfx['target3_offset_x'] = [0] * len(df.index)
+dfx['target3_offset_y'] = [0] * len(df.index)
+dfx['target3_offset_z'] = [0] * len(df.index)
+
 # print(len(new_x[0:548]))
 
 dfy['camera_pos_x'] = [0] * len(df.index)
 dfy['camera_pos_z'] = [0] * len(df.index)
 new_y = np.arange(-0.9944400787353516, 3.21042275428772, 0.00767310735)
 dfy['camera_pos_y'] = new_y[0:548]
+
+# Fill rest with 0s
+dfy['target1_offset_x'] = [0] * len(df.index)
+dfy['target1_offset_y'] = [0] * len(df.index)
+dfy['target1_offset_z'] = [0] * len(df.index)
+dfy['target2_offset_x'] = [0] * len(df.index)
+dfy['target2_offset_y'] = [0] * len(df.index)
+dfy['target2_offset_z'] = [0] * len(df.index)
+dfy['target3_offset_x'] = [0] * len(df.index)
+dfy['target3_offset_y'] = [0] * len(df.index)
+dfy['target3_offset_z'] = [0] * len(df.index)
 
 dfz['camera_pos_x'] = [0] * len(df.index)
 dfz['camera_pos_y'] = [0] * len(df.index)
