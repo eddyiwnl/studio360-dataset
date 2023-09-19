@@ -14,6 +14,7 @@
 #include <iostream>
 #include <fstream>
 #include <DepthMeshLib.h>
+#include <iomanip>
 
 using namespace std::chrono;
 
@@ -126,7 +127,8 @@ int main(int argc, char* argv[]) {
   pangolin::GlRenderBuffer renderBuffer(width, height);
   pangolin::GlFramebuffer frameBuffer(render, renderBuffer);
 
-  pangolin::GlTexture depthTexture(width, height);
+  // pangolin::GlTexture depthTexture(width, height);
+  pangolin::GlTexture depthTexture(width, height, GL_RGBA32F);
   pangolin::GlFramebuffer depthFrameBuffer(depthTexture, renderBuffer);
 
   // Setup a camera
@@ -195,6 +197,8 @@ int main(int argc, char* argv[]) {
   PTexMesh ptexMesh(meshFile, atlasFolder, spherical);
   pangolin::ManagedImage<Eigen::Matrix<uint8_t, 3, 1>> image(width, height);
   pangolin::ManagedImage<Eigen::Matrix<uint8_t, 3, 1>> depthImage(width, height);
+  pangolin::ManagedImage<Eigen::Matrix<float, 1, 1>> depthImage2(width, height);
+
 
   size_t numSpots = 20; //default
   if(navCam){
@@ -205,29 +209,29 @@ int main(int argc, char* argv[]) {
   // rendering the dataset (double equirect pair + interpolation + extrapolation + forward extrapolation)
   for(size_t j=0; j<numSpots;j++){
 
-      // Save cameraPos to file
-      // Convert integer j/k to string and append to the filename
-      std::string jAsString = std::to_string(j);
-      // Construct the full output file path
-      std::string filePath = outputDir + "/cameraPos_" + jAsString + ".txt";
+      // // Save cameraPos to file
+      // // Convert integer j/k to string and append to the filename
+      // std::string jAsString = std::to_string(j);
+      // // Construct the full output file path
+      // std::string filePath = outputDir + "/cameraPos_" + jAsString + ".txt";
 
-      // Open a file for writing
-      std::ofstream outFile(filePath);
+      // // Open a file for writing
+      // std::ofstream outFile(filePath);
       
-      // Loop through the cameraPos vector and write data to the file
-      for (const std::vector<float>& row : cameraPos) {
-          for (float value : row) {
-              // Write each value followed by a space
-              outFile << value << " ";
-          }
-          // Write a newline character at the end of each row
-          outFile << "\n";
-      }
+      // // Loop through the cameraPos vector and write data to the file
+      // for (const std::vector<float>& row : cameraPos) {
+      //     for (float value : row) {
+      //         // Write each value followed by a space
+      //         outFile << value << " ";
+      //     }
+      //     // Write a newline character at the end of each row
+      //     outFile << "\n";
+      // }
 
-      // Close the output file
-      outFile.close();
+      // // Close the output file
+      // outFile.close();
 
-      std::cout << "Data written to file." << std::endl;
+      // std::cout << "Data written to file." << std::endl;
 
       //get the modelview matrix
       Eigen::Matrix4d spot_cam_to_world = s_cam.GetModelViewMatrix();
@@ -383,6 +387,7 @@ int main(int argc, char* argv[]) {
 
               depthFrameBuffer.Unbind();
               depthTexture.Download(depthImage.ptr, GL_RGB, GL_UNSIGNED_BYTE);
+              depthTexture.Download(depthImage2.ptr, GL_RED, GL_FLOAT);
 
               char filename[1000];
               snprintf(filename, 1000, "%s/%s_%04zu_pos%02zu.jpeg", outputDir.c_str(), scene.c_str(), j, 11 + (k+1)/3 ); //11+(k+1)/3 maps 2-12; 5-13; 8-14; 11-15
@@ -390,6 +395,51 @@ int main(int argc, char* argv[]) {
                 depthImage.UnsafeReinterpret<uint8_t>(),
                 pangolin::PixelFormatFromString("RGB24"),
                 std::string(filename));
+
+              // Printing depthIamge to a file
+
+              // Create a 2D vector to store the pixel values
+              // std::vector<std::vector<uint8_t>> depthArray(height, std::vector<uint8_t>(width));
+
+              if(j == 175) {
+                std::vector<std::vector<float>> depthArray(height, std::vector<float>(width));
+
+
+                // Populate the 2D array with depthImage data
+                for (int y = 0; y < height; ++y) {
+                  for (int x = 0; x < width; ++x) {
+                      // depthArray[y][x] = static_cast<uint8_t>(depthImage(x, y)(1));
+                      depthArray[y][x] = static_cast<float>(depthImage2(x, y)(0));
+                  }
+                }
+                // Specify the output file path
+                std::string outputFilePath = outputDir + "/depth_data_" + jAsString + ".txt"; // You can choose a different file format if needed
+                // Open the output file
+                std::ofstream outputFile(outputFilePath);
+
+                if (!outputFile.is_open()) {
+                    std::cerr << "Error: Could not open the output file." << std::endl;
+                    return 1;
+                }
+
+                // Set the output file to show 8 decimal places
+                outputFile << std::fixed << std::setprecision(8);
+
+                // Write the 2D array data to the file
+                for (int y = 0; y < height; ++y) {
+                    for (int x = 0; x < width; ++x) {
+                        // outputFile << static_cast<int>(depthArray[y][x]); // Convert uint8_t to int
+                        outputFile << 1.0f / static_cast<float>(depthArray[y][x]);
+                        if (x < width - 1) {
+                            outputFile << ","; // Separate values with commas
+                        }
+                    }
+                    outputFile << std::endl; // Newline after each row
+                }
+
+                outputFile.close();
+                std::cout << "Depth data saved to " << outputFilePath << std::endl;
+              }
           }
         }
 
