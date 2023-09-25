@@ -381,7 +381,8 @@ int main(int argc, char* argv[]) {
               glViewport(0, 0, width, height);
               glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
               glEnable(GL_CULL_FACE);
-              ptexMesh.RenderDepth(s_cam, 1.f/ 16.f, Eigen::Vector4f(0.0f, 0.0f, 0.0f, 0.0f), eye);
+              // ptexMesh.RenderDepth(s_cam, 1.f/ 16.f, Eigen::Vector4f(0.0f, 0.0f, 0.0f, 0.0f), eye);
+              ptexMesh.RenderDepth(s_cam, 1.f, Eigen::Vector4f(0.0f, 0.0f, 0.0f, 0.0f), eye);
               glDisable(GL_CULL_FACE);
               glPopAttrib(); //GL_VIEWPORT_BIT
 
@@ -401,7 +402,7 @@ int main(int argc, char* argv[]) {
               // Create a 2D vector to store the pixel values
               // std::vector<std::vector<uint8_t>> depthArray(height, std::vector<uint8_t>(width));
 
-              if(j == 175) {
+              if(j == 175 || j == 174) {
                 std::vector<std::vector<float>> depthArray(height, std::vector<float>(width));
 
 
