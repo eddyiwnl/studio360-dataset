@@ -140,12 +140,12 @@ int main(int argc, char* argv[]) {
   }
 
   //random look at direction
-  // int cx = rand()%4;
-  // int cy = rand()%4;
+  int cx = rand()%4;
+  int cy = rand()%4;
 
   // for x
-  int cx = initCam[0] + 1;
-  int cy = initCam[1];
+  // int cx = initCam[0] + 1;
+  // int cy = initCam[1];
 
   // for y
   // int cx = initCam[0];
@@ -321,17 +321,12 @@ int main(int argc, char* argv[]) {
           // Convert integer j/k to string and append to the filename
           std::string jAsString = std::to_string(j);
           std::string kAsString = std::to_string(k);
-          // Construct the full output file path
           std::string filePath = outputDir + "/t_matrix_" + jAsString + "_pos" + kAsString + ".txt";
 
-          // Open a file for writing
           std::ofstream outFile(filePath);
           
           if (outFile.is_open()) {
-              // Write the matrix to the file
               outFile << T_camera_world << std::endl;
-              
-              // Close the file
               outFile.close();
               std::cout << "Matrix written to file." << std::endl;
           } else {
@@ -402,9 +397,9 @@ int main(int argc, char* argv[]) {
               // Create a 2D vector to store the pixel values
               // std::vector<std::vector<uint8_t>> depthArray(height, std::vector<uint8_t>(width));
 
-              if(j == 175 || j == 174) {
+              if(k == 2) {
                 std::vector<std::vector<float>> depthArray(height, std::vector<float>(width));
-
+                std::string kAsString = std::to_string(k);
 
                 // Populate the 2D array with depthImage data
                 for (int y = 0; y < height; ++y) {
@@ -413,9 +408,7 @@ int main(int argc, char* argv[]) {
                       depthArray[y][x] = static_cast<float>(depthImage2(x, y)(0));
                   }
                 }
-                // Specify the output file path
-                std::string outputFilePath = outputDir + "/depth_data_" + jAsString + ".txt"; // You can choose a different file format if needed
-                // Open the output file
+                std::string outputFilePath = outputDir + "/depth_data_" + jAsString + "pos" + kAsString + ".txt";
                 std::ofstream outputFile(outputFilePath);
 
                 if (!outputFile.is_open()) {
@@ -423,19 +416,19 @@ int main(int argc, char* argv[]) {
                     return 1;
                 }
 
-                // Set the output file to show 8 decimal places
+                // 8 dec
                 outputFile << std::fixed << std::setprecision(8);
 
-                // Write the 2D array data to the file
+                // 1/depth to array
                 for (int y = 0; y < height; ++y) {
                     for (int x = 0; x < width; ++x) {
                         // outputFile << static_cast<int>(depthArray[y][x]); // Convert uint8_t to int
                         outputFile << 1.0f / static_cast<float>(depthArray[y][x]);
                         if (x < width - 1) {
-                            outputFile << ","; // Separate values with commas
+                            outputFile << ",";
                         }
                     }
-                    outputFile << std::endl; // Newline after each row
+                    outputFile << std::endl;
                 }
 
                 outputFile.close();
@@ -446,11 +439,11 @@ int main(int argc, char* argv[]) {
 
         if(navCam){
           if(j+1<numSpots){
-            // int cx = rand()%4;
-            // int cy = rand()%4;
+            int cx = rand()%4;
+            int cy = rand()%4;
             // for x
-            int cx = cameraPos[j+1][0] + 1;
-            int cy = cameraPos[j+1][1];
+            // int cx = cameraPos[j+1][0] + 1;
+            // int cy = cameraPos[j+1][1];
 
             // for y
             // int cx = cameraPos[j+1][0];
@@ -568,12 +561,12 @@ int main(int argc, char* argv[]) {
 
         if(navCam){
           if(j+1<numSpots){
-            // int cx = rand()%4;
-            // int cy = rand()%4;
+            int cx = rand()%4;
+            int cy = rand()%4;
 
             // for x
-            int cx = cameraPos[j+1][0] + 1;
-            int cy = cameraPos[j+1][1];
+            // int cx = cameraPos[j+1][0] + 1;
+            // int cy = cameraPos[j+1][1];
 
             // for y
             // int cx = cameraPos[j+1][0];
